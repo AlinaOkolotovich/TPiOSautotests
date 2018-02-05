@@ -9,10 +9,8 @@ public class Main {
 
     public static void main(String[] args) throws MalformedURLException {
         boolean isSSO;
-        Setup test = new Setup(isSSO=false);
+        Setup test = new Setup(isSSO = false);
         test.stopServer();
-
-
 
 
     }
