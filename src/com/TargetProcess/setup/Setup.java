@@ -1,4 +1,5 @@
 package com.TargetProcess.setup;
+
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
@@ -7,12 +8,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;
+
 import java.io.IOException;
 
 
@@ -29,7 +33,6 @@ public class Setup {
     String password;
 
 
-
     //On demand NON-SSO creds
     public static final String NON_SSO_ACCOUNT = "o";
     public static final String NON_SSO_USER_NAME = "admin";
@@ -40,13 +43,12 @@ public class Setup {
     public static final String SSO_USER_NAME = "4testtommy@gmail.com";
     public static final String SSO_PASSWORD = "Okta181373";
 
-    public Setup(boolean isSSO) throws MalformedURLException{
-        if (isSSO == true){
+    public Setup(boolean isSSO) throws MalformedURLException {
+        if (isSSO == true) {
             accountName = SSO_ACCOUNT;
             userName = SSO_USER_NAME;
             password = SSO_PASSWORD;
-        }
-        else {
+        } else {
             accountName = NON_SSO_ACCOUNT;
             userName = NON_SSO_USER_NAME;
             password = NON_SSO_PASSWORD;
@@ -73,15 +75,16 @@ public class Setup {
         this.login(isSSO);
 
     }
-    protected void login(boolean isSSO){
-        if(isSSO == true){
+
+    protected void login(boolean isSSO) {
+        if (isSSO == true) {
             loginToSSO();
-        }
-        else {
+        } else {
             loginToNonSSO();
         }
     }
-    protected void loginToNonSSO(){
+
+    protected void loginToNonSSO() {
         WebElement loginButton = driver.findElement(By.name("Log In"));
         loginButton.click();
         WebElement el1 = driver.findElement(By.name("Account Name"));
@@ -94,8 +97,11 @@ public class Setup {
         loginButton2.click();
         WebElement navigationBar = driver.findElementByXPath("//XCUIElementTypeNavigationBar[@name=\"Views\"]");
         navigationBar.isDisplayed();
-    };
-    protected void loginToSSO(){
+    }
+
+    ;
+
+    protected void loginToSSO() {
         WebElement loginButton = driver.findElement(By.name("SSO"));
         loginButton.click();
         WebElement el1 = driver.findElement(By.name("Account Name"));
@@ -106,21 +112,22 @@ public class Setup {
         ssoUserName.sendKeys(userName);
         WebElement ssoPassword = driver.findElement(By.name("Password"));
         ssoPassword.sendKeys(password);
-        WebElement ssoLogInButton  = driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Sign In\"]");
+        WebElement ssoLogInButton = driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Sign In\"]");
         ssoLogInButton.click();
         WebElement navigationBar = driver.findElementByXPath("//XCUIElementTypeNavigationBar[@name=\"Views\"]");
         navigationBar.isDisplayed();
     }
 
     protected void setCapabilities() throws MalformedURLException {
-        DesiredCapabilities capabilities=new DesiredCapabilities();
+        DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("deviceName", "iPhone 7");
-        capabilities.setCapability("app","/Users/okolotovich/Desktop/TargetProcess.app");
+        capabilities.setCapability("app", "/Users/okolotovich/Desktop/TargetProcess.app");
         capabilities.setCapability("automatioName", "ios-driver");
         capabilities.setCapability("platformVersion", "11.2");
-        driver=new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-        driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS );
+        driver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
     }
+
     protected void allowNotifications() {
         WebElement button = driver.findElement(By.name("Allow"));
         button.click();
@@ -137,9 +144,7 @@ public class Setup {
         }
     }
 
-
-
-     public void stopServer(){
+    public void stopServer() {
         Runtime runtime = Runtime.getRuntime();
         try {
             runtime.exec("/usr/bin/open -a Terminal /k \"^C");
@@ -147,7 +152,7 @@ public class Setup {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        }
+    }
 }
 
     /*public void horizontalSwipe(String fromElement, int x, int y){
